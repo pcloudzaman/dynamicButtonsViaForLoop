@@ -1,15 +1,16 @@
 package com.example.buttons;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.constraintlayout.widget.ConstraintSet;
 
-import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationSet;
+import android.view.animation.BounceInterpolator;
+import android.view.animation.TranslateAnimation;
 import android.widget.Button;
 import android.widget.LinearLayout;
-import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
     LinearLayout linearLayout;
@@ -19,7 +20,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        String[] names = {"buttton1", "button2", "button3"};
+        String[] names = {"slide activity (fragment)", "button2", "button3"};
         linearLayout = findViewById(R.id.linLayout);
         for (int i = 0; i < 3; i++) {
             button = new Button(this);
@@ -61,22 +62,25 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     public void onClick(View view) {
         String string = view.getTag().toString();
-        for (int j = 0; j < 3; j++) {
-
-            if (string.equals(Integer.toString(j))) {
-                Toast.makeText(this, "button" + Integer.toString(j + 1) + "was clicked", Toast.LENGTH_SHORT).show();
-            }
+        if (string.equals("0")) {
+            Intent intent = new Intent(this, SlideActivity.class);
+            startActivity(intent);
+        }else if(string.equals("1")){
+            Intent intent = new Intent(this, ActivityDynamicFragment.class);
+            startActivity(intent);
         }
-//if(string.equals("0")){
-//    Toast.makeText(this, "button1 was clicked", Toast.LENGTH_SHORT).show();
-//
-//}else if(string.equals("1")){
-//    Toast.makeText(this, "button2 was clicked", Toast.LENGTH_SHORT).show();
-//
-//}else  if(string.equals("2")){
-//    Toast.makeText(this, "button3 was clicked", Toast.LENGTH_SHORT).show();
-//
-//}
+        AnimationSet animationSet = new AnimationSet(true);
+        animationSet.setFillAfter(true);
+        animationSet.setDuration(1000);
+        animationSet.setInterpolator(new BounceInterpolator());
+        //TranslateAnimation translateAnimation = new TranslateAnimation(0, 0, view.getTop(), toYDelta);
+        //for (int j = 0; j < 3; j++) {
+
+//            if (string.equals(Integer.toString(j))) {
+//                Toast.makeText(this, "button" + Integer.toString(j + 1) + "was clicked", Toast.LENGTH_SHORT).show();
+//            }
+
+        //}
 
     }
 }
